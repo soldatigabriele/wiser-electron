@@ -1,24 +1,18 @@
 # vue-desktop
 
+```
+node -v
+v14.15.4
+
+npm -v
+6.14.10
+```
+
 ## Project setup
 ```
-npm install
-```
+yarn install
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+yarn run electron:serve
 
-### Compiles and minifies for production
+yarn run electron:build
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
