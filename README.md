@@ -10,6 +10,9 @@ npm -v
 
 ## Project setup
 ```
+
+npm install electron-builder@23.0.2
+
 yarn install
 
 yarn run electron:serve
