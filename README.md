@@ -27,3 +27,17 @@ vue add electron-builder
 yarn add electron-builder@23.0.2
 yarn run electron:build
 ```
+
+Wiser Endpoints
+
+```
+WISERHUBURL = "http://{}/data/domain/"
+WISERNETWORKURL = "http://{}/data/network/"
+WISERMODEURL = "http://{}/data/domain/System/RequestOverride"
+WISERSETROOMTEMP = "http://{}//data/domain/Room/{}"
+WISERROOM = "http://{}//data/domain/Room/{}"
+WISERSCHEDULEURL = "http://{}/data/domain/Schedule/{}"
+WISERSMARTPLUGURL = "http://{}/data/domain/SmartPlug/{}"
+WISERSMARTPLUGSURL = "http://{}/data/domain/SmartPlug"
+
+```
