@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex justify-content-end">
-    {{ this.room.Name }} {{this.room.CalculatedTemperature/10}}° :
-    <span v-if="this.room.CurrentSetPoint == '-200'">OFF</span>
-    <span v-else>{{this.room.CurrentSetPoint/10}}°</span>
+    {{ this.localRoom.Name }} {{this.localRoom.CalculatedTemperature/10}}° :
+    <span v-if="this.localRoom.CurrentSetPoint == '-200'">OFF</span>
+    <span v-else>{{this.localRoom.CurrentSetPoint/10}}°</span>
     <button @click="setTemperature(-200)">Off</button>
     <button @click="setTemperature(100)">10°</button>
     <button @click="setTemperature(150)">15°</button>
@@ -16,10 +16,17 @@
 
 <script>
 import axios from "./../http.js";
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
 
 export default {
   name: "Room",
   props: ["room"],
+  data: function () {
+    return {
+      localRoom: this.room,
+    }
+  },
   methods: {
     turnOffBoost() {
       this.makeRequest({
@@ -53,14 +60,31 @@ export default {
     makeRequest(patchData) {
       this.$emit("updating")
       axios
-        .patch("/data/domain/Room/" + this.room.id, patchData)
+        .patch("/data/domain/Room/" + this.localRoom.id, patchData)
         .then((response) => {
           // Handle successful response
           console.log("successfully changed room temperature", response.data);
+          this.localRoom = response.data
+
+          Toastify({
+            text: "Success",
+            duration: 1500,
+            style: {
+              background: "#5bd469",
+            },
+          }).showToast();
         })
         .catch((error) => {
           // Handle error response
           console.log(error.response.data);
+
+          Toastify({
+            text: "Success",
+            duration: 1500,
+            style: {
+              background: "#d45b5b",
+            },
+          }).showToast();
         })
         .finally(() => {
           this.$emit("updated");

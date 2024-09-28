@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
       <div class="col-auto">
         <div v-for="room in rooms" :key="room.id">
-          <Room :room="room" @updating="loading=true" @updated="loading=false;getRooms()" />
+          <Room :room="room" @updating="loading=true" @updated="loading=false;" />
         </div>
       </div>
     </div>
