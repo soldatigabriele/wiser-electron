@@ -1,4 +1,9 @@
 <template>
+
+  <div class="loading-container d-flex align-items-center justify-content-center"  v-if="loading">
+      <div class="spinner-border" role="status"></div>
+  </div>
+
   <div class="container">
     <div class="row mb-5">
       <div class="col">
@@ -8,20 +13,22 @@
     <div class="row justify-content-center">
       <div class="col-auto">
         <div v-for="room in rooms" :key="room.id">
-          <Room :room="room" @updated="getRooms()" />
+          <Room :room="room" @updating="loading=true" @updated="loading=false;getRooms()" />
         </div>
       </div>
     </div>
   </div>
   <pre>
-    {{rooms}}
+    <!-- {{rooms}} -->
   </pre>
+
 
   <h2>System:</h2>
   <ul>
     <li>Temperature: {{ system.temperature }}</li>
     <li>Mode: {{ system.SystemMode }}</li>
   </ul>
+
   <pre>
   {{systemResponse}}
   </pre>
@@ -42,6 +49,7 @@ export default {
   name: "App",
   data() {
     return {
+     loading: false,
       rooms: [],
       system: {},
       systemResponse: null,
@@ -84,5 +92,14 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.loading-container {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color:white;
+  color:green;
+  opacity: 0.5;
+  position: absolute;
 }
 </style>

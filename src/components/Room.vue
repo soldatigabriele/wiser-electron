@@ -51,7 +51,7 @@ export default {
       this.makeRequest(patchData);
     },
     makeRequest(patchData) {
-      console.log("patchData", patchData);
+      this.$emit("updating")
       axios
         .patch("/data/domain/Room/" + this.room.id, patchData)
         .then((response) => {
