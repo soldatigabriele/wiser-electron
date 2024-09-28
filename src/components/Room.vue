@@ -79,7 +79,7 @@ export default {
           console.log(error.response.data);
 
           Toastify({
-            text: "Success",
+            text: "Something went wrong",
             duration: 1500,
             style: {
               background: "#d45b5b",
