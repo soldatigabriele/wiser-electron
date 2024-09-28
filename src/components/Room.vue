@@ -1,27 +1,33 @@
 <template>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end" v-if="this.localRoom">
+    #{{this.localRoom.id}}
     {{ this.localRoom.Name }} {{this.localRoom.CalculatedTemperature/10}}° :
     <span v-if="this.localRoom.CurrentSetPoint == '-200'">OFF</span>
     <span v-else>{{this.localRoom.CurrentSetPoint/10}}°</span>
     <button @click="setTemperature(-200)">Off</button>
-    <button @click="setTemperature(100)">10°</button>
-    <button @click="setTemperature(150)">15°</button>
     <button @click="setTemperature(180)">18°</button>
+    <button @click="setTemperature(200)">20°</button>
+    <button @click="setTemperature(220)">22°</button>
     <button @click="boostTemperature(30)">Boost 30m</button>
     <button @click="boostTemperature(60)">Boost 1h</button>
     <button @click="boostTemperature(120)">Boost 2h</button>
     <button @click="turnOffBoost()">Boost Off</button>
+    <div v-for="valveId, key in this.localRoom.SmartValveIds" :key="key">
+      <Device :valve-id="valveId" :key="valveId"></Device>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "./../http.js";
 import Toastify from 'toastify-js'
+import Device from './Device.vue'
 import "toastify-js/src/toastify.css"
 
 export default {
   name: "Room",
   props: ["room"],
+  components: {Device},
   data: function () {
     return {
       localRoom: this.room,
