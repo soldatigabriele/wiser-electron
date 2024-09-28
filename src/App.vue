@@ -4,17 +4,15 @@
       <div class="spinner-border" role="status"></div>
   </div>
 
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col">
-        <img alt="Vue logo" src="./assets/wiser.png" />
+  <div class="container-fluid">
+    <div class="row py-5 justify-content-center">
+      <div class="col-auto">
+        <img alt="logo" width="180" src="./assets/wiser.png" />
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-auto">
-        <div v-for="room in rooms" :key="room.id">
-          <Room :room="room" @updating="loading=true" @updated="loading=false;" />
-        </div>
+      <div class="col-12 col-xl-6" v-for="room in rooms" :key="room.id">
+        <Room :room="room" @updating="loading=true" @updated="loading=false;" />
       </div>
     </div>
   </div>
@@ -23,20 +21,20 @@
   </pre>
 
 
+<!-- 
   <h2>System:</h2>
   <ul>
-    <li>Temperature: {{ system.temperature }}</li>
+    <li>T emperature: {{ system.temperature }}</li>
     <li>Mode: {{ system.SystemMode }}</li>
   </ul>
 
   <pre>
-  {{systemResponse}}
+  {{system}}
   </pre>
-
   <h2>Smart Plug</h2>
   <ul>
     <li v-for="plug in system.SmartPlugs" :key="plug.id">{{plug.Name}} {{plug.State}}</li>
-  </ul>
+  </ul> -->
 </template>
 
 <script>
@@ -86,13 +84,10 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  background: #3fcc59;
 }
+
 .loading-container {
   width: 100vw;
   height: 100vh;
