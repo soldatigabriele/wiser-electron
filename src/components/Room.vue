@@ -1,5 +1,5 @@
 <template>
-  <div class="room" :class="{'inactive': !enabled(this.localRoom)}" v-if="this.localRoom">
+  <div class="room" ref="room" :class="{'inactive': !enabled(this.localRoom)}" v-if="this.localRoom">
     <div class="row mb-2">
       <div class="col">
         <div class="room-name">
@@ -42,8 +42,10 @@
         <button class="me-2 btn btn-outline-secondary" @click="boostTemperature(180)">3h</button>
       </div>
     </div>
-    <div v-for="valveId, key in this.localRoom.SmartValveIds" :key="key">
-      <Device class="d-none" :valve-id="valveId" :key="valveId"></Device>
+    <div class="device-container">
+      <div v-for="valveId, key in this.localRoom.SmartValveIds" :key="key">
+        <Device :valve-id="valveId" :key="valveId" :hovered="hovered"></Device>
+      </div>
     </div>
   </div>
 </template>
@@ -60,11 +62,20 @@ export default {
   components: {Device},
   data: function () {
     return {
+      hovered: false,
       localRoom: this.room,
     }
   },
   computed(){
     },
+  mounted(){
+    this.$refs['room'].addEventListener("mouseover", () => {
+      this.hovered = true
+    });
+    this.$refs['room'].addEventListener("mouseleave", () => {
+      this.hovered = false
+    });
+  },
   methods: {
     enabled: (room) => {
       return room.SmartValveIds.length > 0
@@ -159,6 +170,7 @@ export default {
   /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); */
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease-in-out;
+  position: relative;
 
 }
 
@@ -187,5 +199,12 @@ export default {
 
 .title{
   padding-bottom: 16px 0 8px 0;
+}
+
+.device-container {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
 }
 </style>
