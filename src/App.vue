@@ -16,6 +16,13 @@
       </div>
     </div>
   </div>
+ 
+  <div class="reload">
+    <a href="" :disabled="loading" @click.prevent="reload">
+      <img src="./assets/reload.svg" width="20">
+    </a>
+  </div>
+
   <pre>
     <!-- {{rooms}} -->
   </pre>
@@ -42,6 +49,9 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import Room from "./components/Room.vue";
 import axios from "./http.js";
+import Toastify from 'toastify-js'
+
+import "toastify-js/src/toastify.css"
 
 export default {
   name: "App",
@@ -61,22 +71,68 @@ export default {
     this.getSystem();
   },
   methods: {
+    reload(){
+      this.loading = true
+
+      Promise.all([this.getRooms(), this.getSystem()]).then(() => {
+          Toastify({
+            text: "Data Reloaded",
+            duration: 1500,
+            style: {
+              // background: "#5bd469",
+            },
+          }).showToast();
+          this.loading = false
+        }).catch(()=>{
+          Toastify({
+            text: "Could not reload the data",
+            duration: 1500,
+            style: {
+              background: "#d45b5b",
+            },
+          }).showToast();
+          this.loading = false
+        })
+    },
     getRooms() {
-      console.log("get rooms");
-      axios.get("/data/domain/Room").then((res) => {
-        this.rooms = res.data;
-      });
+      return new Promise((resolve, reject)=>{
+        axios.get("/data/domain/Room").then((res) => {
+          this.rooms = res.data;
+          resolve()
+        }).catch((error) => {
+          console.log(error);
+          Toastify({
+            text: "Something went wrong",
+            duration: 1500,
+            style: {
+              background: "#d45b5b",
+            },
+          }).showToast();
+          reject()
+        });
+      })
     },
     getSystem() {
-      axios
-        .get("/data/domain/System")
-        .then((response) => {
-          this.systemResponse = response.data;
-          this.system = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      return new Promise((resolve, reject)=>{
+        axios
+          .get("/data/domain/System")
+          .then((response) => {
+            this.systemResponse = response.data;
+            this.system = response.data;
+            resolve()
+          })
+          .catch((error) => {
+            console.log(error);
+            Toastify({
+              text: "Something went wrong",
+              duration: 1500,
+              style: {
+                background: "#d45b5b",
+              },
+            }).showToast();
+            reject()
+          })
+      });
     },
   },
 };
@@ -97,5 +153,11 @@ export default {
   opacity: 0.5;
   position: absolute;
   z-index: 1;
+}
+
+.reload{
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 }
 </style>
