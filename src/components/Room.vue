@@ -21,13 +21,13 @@
         <div class="title">
           Temperature
         </div>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(-200)">Off</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(100)">10°</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(180)">18°</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(190)">19°</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(200)">20°</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(220)">22°</button>
-        <button class="me-2 btn btn-outline-secondary" @click="setTemperature(240)">24°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == -200}" @click="setTemperature(-200)">Off</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 100}" @click="setTemperature(100)">10°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 180}" @click="setTemperature(180)">18°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 190}" @click="setTemperature(190)">19°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 200}" @click="setTemperature(200)">20°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 220}" @click="setTemperature(220)">22°</button>
+        <button class="me-2 btn btn-outline-secondary" :class="{'btn-secondary selected': this.localRoom.CurrentSetPoint == 240}" @click="setTemperature(240)">24°</button>
       </div>
     </div>
     <div class="row mb-2" v-if="enabled(this.localRoom)">
@@ -154,6 +154,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.selected{
+  color:white;
+}
 .room {
   color: #333;
   /* border: 1px solid gray; */

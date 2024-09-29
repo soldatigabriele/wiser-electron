@@ -96,5 +96,6 @@ export default {
   color:green;
   opacity: 0.5;
   position: absolute;
+  z-index: 1;
 }
 </style>
