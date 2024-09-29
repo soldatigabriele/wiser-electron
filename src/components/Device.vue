@@ -6,13 +6,19 @@
           <img v-if="device.DisplayedSignalStrength == 'Poor'" class="icon" width="24" src="./../assets/signal-1.svg" /> 
           <img v-if="device.DisplayedSignalStrength == 'Medium'" class="icon" width="24" src="./../assets/signal-2.svg" /> 
           <img v-if="device.DisplayedSignalStrength == 'Good'" class="icon" width="24" src="./../assets/signal-3.svg" /> 
+          <div class="rssi">{{ device.ReceptionOfController.Rssi }}</div>
+            <!-- Good Signal (between 0 & -54dBm)
+            Normal Signal (between -54 & -79dBm)
+            Poor Signal (<-79dBm)
+            No Signal (device is offline) -->
         </div>
         <div class="col-auto">
           <!-- Low, OneThird, TwoThirds, ThreeThirds ? , Full ? -->
           <img v-if="device.BatteryLevel == 'Low'" class="icon rotated" width="30" src="./../assets/battery-0.svg" /> 
           <img v-if="device.BatteryLevel == 'OneThird'" class="icon rotated" width="30" src="./../assets/battery-1.svg" /> 
           <img v-if="device.BatteryLevel == 'TwoThirds'" class="icon rotated" width="30" src="./../assets/battery-2.svg" /> 
-          <img v-if="device.BatteryLevel == 'ThreeThirds' || device.BatteryLevel == 'Full' || device.BatteryLevel == 'High'" class="icon rotated" width="30" src="./../assets/battery-3.svg" /> 
+          <!-- Normal is probably the best guess for the full battery, as I found it in the RoomStat -->
+          <img v-if="device.BatteryLevel == 'ThreeThirds' || device.BatteryLevel == 'Full' || device.BatteryLevel == 'High' || device.BatteryLevel == 'Normal'" class="icon rotated" width="30" src="./../assets/battery-3.svg" /> 
         </div>
       </div>
 
@@ -58,12 +64,19 @@ export default {
   transition: all 0.3s ease-in-out;
   padding: 14px 28px;
   transform: translateY(-100%);
+  min-height: 100px;
 }
 .device-info.hovered{
   transform: translateY(0%);
 }
 .rotated {
   transform: rotate(90deg);
+}
+.rssi{
+  position:absolute;
+  top: 40px;
+  color: #ccc;
+  font-size: 0.7em;
 }
 </style>
 

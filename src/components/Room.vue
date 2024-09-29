@@ -4,6 +4,9 @@
       <div class="col">
         <div class="room-name">
           {{ this.localRoom.Name }} 
+          <span v-if="this.localRoom.ControlOutputState === 'On'">
+            <img class="icon" width="24" src="./../assets/flame.svg" /> 
+          </span>
         </div>
         <div class="d-flex justify-content-center">
           <div class="room-temperature">
@@ -128,7 +131,7 @@ export default {
             text: "Success",
             duration: 1500,
             style: {
-              background: "#5bd469",
+              // background: "#5bd469",
             },
           }).showToast();
         })
